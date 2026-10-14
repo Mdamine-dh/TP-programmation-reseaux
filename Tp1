@@ -1,0 +1,115 @@
+mdamine@Cayber-Boy:~/Desktop$ mkdir netlab-configs && cd netlab-configs
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ touch mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ nano mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/mdamine/Desktop/netlab-configs/.git/
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git config user.name "Mdamine"
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git config user.email"dherifaamin4@gmail.com"
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add .
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   mikrotik-router1.rsc
+
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "feat(mikrotik): configuration initiale de router1"
+[master (root-commit) c6f9265] feat(mikrotik): configuration initiale de router1
+ 1 file changed, 2 insertions(+)
+ create mode 100644 mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ nano mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git diff
+diff --git a/mikrotik-router1.rsc b/mikrotik-router1.rsc
+index 2eaeeca..abb9bbd 100644
+--- a/mikrotik-router1.rsc
++++ b/mikrotik-router1.rsc
+@@ -1,2 +1,2 @@
+-/ip address add address=192.168.10.1/24 interface=ether1
++/ip address add address=192.168.10.100/24 interface=ether1
+ /ip route add gateway=192.168.10.254
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git log --oneline --graph
+* c6f9265 (HEAD -> master) feat(mikrotik): configuration initiale de router1
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git show <hash>
+bash: syntax error near unexpected token `newline'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ touch credentials.env
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ cat << 'EOF' > cisco-sw1.cfg
+enable
+configure terminal
+hostname SW-CORE-01
+interface vlan 1
+ ip address 192.168.1.2 255.255.255.0
+ no shutdown
+end
+EOF
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add cisco-sw1.cfg
+git commit -m "feat(cisco): ajout de la configuration initiale du switch sw1"
+[master e228410] feat(cisco): ajout de la configuration initiale du switch sw1
+ 1 file changed, 7 insertions(+)
+ create mode 100644 cisco-sw1.cfg
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git log --oneline --graph
+* e228410 (HEAD -> master) feat(cisco): ajout de la configuration initiale du switch sw1
+* c6f9265 feat(mikrotik): configuration initiale de router1
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git show e228410
+commit e22841096652f4aca348bae134d4a581db0136a7 (HEAD -> master)
+Author: Mdamine <dherifaamin4@gmail.com>
+Date:   Wed Oct 14 17:04:48 2026 +0100
+
+    feat(cisco): ajout de la configuration initiale du switch sw1
+
+diff --git a/cisco-sw1.cfg b/cisco-sw1.cfg
+new file mode 100644
+index 0000000..b8052a5
+--- /dev/null
++++ b/cisco-sw1.cfg
+@@ -0,0 +1,7 @@
++enable
++configure terminal
++hostname SW-CORE-01
++interface vlan 1
++ ip address 192.168.1.2 255.255.255.0
++ no shutdown
++end
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "api_secret_password=SuperSecret123!" > credentials.env
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ cat << 'EOF' > .gitignore
+credentials.env
+*.bak
+EOF
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   mikrotik-router1.rsc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "# test modification" >> mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git restore mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git restore --staged mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit --amend -m "chore(lab): ajout d'un fichier temporaire de test"
+[master b37014c] chore(lab): ajout d'un fichier temporaire de test
+ Date: Wed Oct 14 17:04:48 2026 +0100
+ 1 file changed, 7 insertions(+)
+ create mode 100644 cisco-sw1.cfg
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git revert --no-commit HEAD
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "revert: suppression de la configuration erronée"
+[master 5314851] revert: suppression de la configuration erronée
+ 1 file changed, 7 deletions(-)
+ delete mode 100644 cisco-sw1.cfg
+

@@ -1,0 +1,242 @@
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch -c feature/vlan-guest
+Switched to a new branch 'feature/vlan-guest'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "vlan-id 10 name guest" > vlan-guest.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add vlan-guest.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "feat: ajout de la configuration VLAN guest"
+[feature/vlan-guest 4d68a59] feat: ajout de la configuration VLAN guest
+ 1 file changed, 1 insertion(+)
+ create mode 100644 vlan-guest.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch main
+fatal: invalid reference: main
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git merge feature/vlan-guest
+Updating 5314851..4d68a59
+Fast-forward
+ vlan-guest.rsc | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 vlan-guest.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch -c feature/dhcp
+Switched to a new branch 'feature/dhcp'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "dhcp-server enabled" > dhcp.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch -c feature/dns
+Switched to a new branch 'feature/dns'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "dns-server set servers=8.8.8.8" > dns.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add dns.rsc && git commit -m "feat: configuration DNS"
+[feature/dns 6b01bba] feat: configuration DNS
+ 1 file changed, 1 insertion(+)
+ create mode 100644 dns.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch feature/dhcp
+Switched to branch 'feature/dhcp'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add dhcp.rsc && git commit -m "feat: configuration DHCP"
+[feature/dhcp ac3a1a2] feat: configuration DHCP
+ 1 file changed, 1 insertion(+)
+ create mode 100644 dhcp.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git merge feature/dhcp
+Updating 4d68a59..ac3a1a2
+Fast-forward
+ dhcp.rsc | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 dhcp.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git merge feature/dns
+Merge made by the 'ort' strategy.
+ dns.rsc | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 dns.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git log --graph --oneline --all
+*   f6ffaae (HEAD -> master) Merge branch 'feature/dns'
+|\  
+| * 6b01bba (feature/dns) feat: configuration DNS
+* | ac3a1a2 (feature/dhcp) feat: configuration DHCP
+|/  
+* 4d68a59 (feature/vlan-guest) feat: ajout de la configuration VLAN guest
+* 5314851 revert: suppression de la configuration erronée
+* b37014c chore(lab): ajout d'un fichier temporaire de test
+* c6f9265 feat(mikrotik): configuration initiale de router1
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "chore: mise à jour IP sur main"
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+nothing added to commit but untracked files present (use "git add" to track)
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch feature/renumbering
+fatal: invalid reference: feature/renumbering
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch -c feature/renumbering
+Switched to a new branch 'feature/renumbering'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ nano mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "chore: mise à jour IP sur feature/renumberin"
+[feature/renumbering 8d27de6] chore: mise à jour IP sur feature/renumberin
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch main
+fatal: invalid reference: main
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ nano mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "chore: mise à jour IP sur main"
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   mikrotik-router1.rsc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "chore: mise à jour IP sur main"
+[master b848366] chore: mise à jour IP sur main
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git merge feature/renumbering
+Auto-merging mikrotik-router1.rsc
+CONFLICT (content): Merge conflict in mikrotik-router1.rsc
+Automatic merge failed; fix conflicts and then commit the result.
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ nano mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git commit -m "fix: résolution du conflit d'adressage IP"
+[master 0abb534] fix: résolution du conflit d'adressage IP
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch -c feature/ospf
+Switched to a new branch 'feature/ospf'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "routing ospf instance set enabled=yes" > ospf.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add ospf.rsc && git commit -m "feat: configuration OSPF"
+[feature/ospf 11cb843] feat: configuration OSPF
+ 1 file changed, 1 insertion(+)
+ create mode 100644 ospf.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "# documentation" >> README.md
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git add README.md && git commit -m "docs: mise à jour du README"
+[master 5fe8d9e] docs: mise à jour du README
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch feature/ospf
+Switched to branch 'feature/ospf'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git rebase master
+Successfully rebased and updated refs/heads/feature/ospf.
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git log --oneline --graph --all
+* 54407e6 (HEAD -> feature/ospf) feat: configuration OSPF
+* 5fe8d9e (master) docs: mise à jour du README
+*   0abb534 fix: résolution du conflit d'adressage IP
+|\  
+| * 8d27de6 (feature/renumbering) chore: mise à jour IP sur feature/renumberin
+* | b848366 chore: mise à jour IP sur main
+|/  
+*   f6ffaae Merge branch 'feature/dns'
+|\  
+| * 6b01bba (feature/dns) feat: configuration DNS
+* | ac3a1a2 (feature/dhcp) feat: configuration DHCP
+|/  
+* 4d68a59 (feature/vlan-guest) feat: ajout de la configuration VLAN guest
+* 5314851 revert: suppression de la configuration erronée
+* b37014c chore(lab): ajout d'un fichier temporaire de test
+* c6f9265 feat(mikrotik): configuration initiale de router1
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git stash
+No local changes to save
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git stash pop
+No stash entries found.
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ echo "# Ajout d'une note temporaire" >> mikrotik-router1.rsc
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git status
+On branch feature/ospf
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   mikrotik-router1.rsc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git stash
+Saved working directory and index state WIP on feature/ospf: 54407e6 feat: configuration OSPF
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch feature/dhcp
+Switched to branch 'feature/dhcp'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch feature/ospf
+Switched to branch 'feature/ospf'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git stash pop
+On branch feature/ospf
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   mikrotik-router1.rsc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (79d2cf00ea686837b1bc608c2c064471b044b324)
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git log --oneline --all
+54407e6 (HEAD -> feature/ospf) feat: configuration OSPF
+5fe8d9e (master) docs: mise à jour du README
+0abb534 fix: résolution du conflit d'adressage IP
+b848366 chore: mise à jour IP sur main
+8d27de6 (feature/renumbering) chore: mise à jour IP sur feature/renumberin
+f6ffaae Merge branch 'feature/dns'
+ac3a1a2 (feature/dhcp) feat: configuration DHCP
+6b01bba (feature/dns) feat: configuration DNS
+4d68a59 (feature/vlan-guest) feat: ajout de la configuration VLAN guest
+5314851 revert: suppression de la configuration erronée
+b37014c chore(lab): ajout d'un fichier temporaire de test
+c6f9265 feat(mikrotik): configuration initiale de router1
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git switch master
+M	mikrotik-router1.rsc
+Switched to branch 'master'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git cherry-pick 6b01bba 
+On branch master
+You are currently cherry-picking commit 6b01bba.
+  (all conflicts fixed: run "git cherry-pick --continue")
+  (use "git cherry-pick --skip" to skip this patch)
+  (use "git cherry-pick --abort" to cancel the cherry-pick operation)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   mikrotik-router1.rsc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+The previous cherry-pick is now empty, possibly due to conflict resolution.
+If you wish to commit it anyway, use:
+
+    git commit --allow-empty
+
+Otherwise, please use 'git cherry-pick --skip'
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git tag -a v1.0.0 -m "Première version stable des configs"
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git tag
+v1.0.0
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ git show v1.0.0
+tag v1.0.0
+Tagger: Mdamine <dherifaamin4@gmail.com>
+Date:   Wed Oct 14 21:55:04 2026 +0100
+
+Première version stable des configs
+
+commit 5fe8d9ed8110e047f27b13f1f1adadaee9ac33d0 (HEAD -> master, tag: v1.0.0)
+Author: Mdamine <dherifaamin4@gmail.com>
+Date:   Wed Oct 14 20:47:01 2026 +0100
+
+    docs: mise à jour du README
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..ebfb366
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1 @@
++# documentation
+mdamine@Cayber-Boy:~/Desktop/netlab-configs$ 
+
+
+
